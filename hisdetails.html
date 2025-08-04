@@ -1,0 +1,250 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Pelli.com – Name & DOB</title>
+  <style>
+    body {
+      font-family: 'Segoe UI', sans-serif;
+      background: #f5f5f5;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      height: 100vh;
+      margin: 0;
+    }
+
+    .form-box {
+      background: #ffffff;
+      padding: 40px;
+      border-radius: 15px;
+      box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
+      width: 90%;
+      max-width: 450px;
+      text-align: center;
+      position: relative;
+    }
+
+    .icon {
+      width: 70px;
+      height: 70px;
+      background: radial-gradient(circle, #efe5ff, #f8f6ff);
+      border-radius: 50%;
+      margin: 0 auto 30px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 28px;
+      color: #9d61ff;
+    }
+
+    h2 {
+      text-align: left;
+      font-size: 20px;
+      margin-bottom: 8px;
+      color: #333;
+    }
+
+    input[type="text"], input[type="number"] {
+      width: 100%;
+      padding: 12px 14px;
+      margin-bottom: 18px;
+      font-size: 16px;
+      border: 1px solid #ccc;
+      border-radius: 8px;
+      outline: none;
+    }
+
+    .dob-group {
+      display: flex;
+      justify-content: space-between;
+      gap: 10px;
+    }
+
+    .dob-group input {
+      flex: 1;
+      text-align: center;
+    }
+
+    .continue-btn {
+      width: 100%;
+      margin-top: 30px;
+      padding: 14px 0;
+      font-size: 16px;
+      border: none;
+      border-radius: 30px;
+      background: #e0e0e0;
+      color: #888;
+      cursor: not-allowed;
+      font-weight: bold;
+    }
+
+    .continue-btn.active {
+      background: #9d61ff;
+      color: #fff;
+      cursor: pointer;
+    }
+
+    /* Modal styles */
+    .modal-overlay {
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        background: rgba(0, 0, 0, 0.5);
+        display: none;
+        justify-content: center;
+        align-items: center;
+        z-index: 1000;
+    }
+    .modal {
+        background: #fff;
+        padding: 20px;
+        border-radius: 10px;
+        text-align: center;
+        width: 80%;
+        max-width: 350px;
+        box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
+    }
+    .modal-title {
+        font-size: 20px;
+        font-weight: bold;
+        color: #e91e63;
+        margin-bottom: 10px;
+    }
+    .modal-message {
+        font-size: 16px;
+        color: #555;
+        margin-bottom: 20px;
+    }
+    .modal-button {
+        background: #e91e63;
+        color: #fff;
+        padding: 10px 20px;
+        border: none;
+        border-radius: 20px;
+        cursor: pointer;
+    }
+  </style>
+</head>
+<body>
+
+  <div class="form-box">
+    <div class="icon">👥</div>
+
+    <h2 id="name-heading">His name</h2>
+    <input type="text" id="firstName" placeholder="First name">
+    <input type="text" id="lastName" placeholder="Last name">
+
+    <h2>Date of birth</h2>
+    <div class="dob-group">
+      <input type="number" id="day" placeholder="DD" min="1" max="31">
+      <input type="number" id="month" placeholder="MM" min="1" max="12">
+      <input type="number" id="year" placeholder="YYYY" min="1900" max="2025">
+    </div>
+
+    <button class="continue-btn" id="continueBtn" disabled>Continue</button>
+  </div>
+
+  <!-- Underage Modal -->
+  <div id="underage-modal-overlay" class="modal-overlay">
+      <div class="modal">
+          <p class="modal-title">Not Eligible</p>
+          <p class="modal-message">You must be 21 years or older to create a profile.</p>
+          <button class="modal-button" onclick="closeModal()">OK</button>
+      </div>
+  </div>
+
+  <script>
+    const firstNameInput = document.getElementById('firstName');
+    const lastNameInput = document.getElementById('lastName');
+    const dayInput = document.getElementById('day');
+    const monthInput = document.getElementById('month');
+    const yearInput = document.getElementById('year');
+    const continueBtn = document.getElementById('continueBtn');
+    const nameHeading = document.getElementById('name-heading');
+    const underageModal = document.getElementById('underage-modal-overlay');
+
+    // Simple function to get a URL parameter
+    function getParameterByName(name, url = window.location.href) {
+        name = name.replace(/[\[\]]/g, '\\$&');
+        const regex = new RegExp('[?&]' + name + '(=([^&#]*)|&|#|$)'),
+            results = regex.exec(url);
+        if (!results) return null;
+        if (!results[2]) return '';
+        return decodeURIComponent(results[2].replace(/\+/g, ' '));
+    }
+
+    // Set heading based on gender parameter
+    const gender = getParameterByName('gender');
+    if (gender === 'Male') {
+        nameHeading.textContent = "His name";
+    } else if (gender === 'Female') {
+        nameHeading.textContent = "Her name";
+    } else {
+        nameHeading.textContent = "Your name";
+    }
+
+    function checkAllFields() {
+        return firstNameInput.value.trim() !== '' &&
+               lastNameInput.value.trim() !== '' &&
+               dayInput.value.trim() !== '' &&
+               monthInput.value.trim() !== '' &&
+               yearInput.value.trim() !== '';
+    }
+
+    function checkAge() {
+        const day = parseInt(dayInput.value, 10);
+        const month = parseInt(monthInput.value, 10);
+        const year = parseInt(yearInput.value, 10);
+
+        if (isNaN(day) || isNaN(month) || isNaN(year)) {
+            return false;
+        }
+
+        const today = new Date();
+        const birthDate = new Date(year, month - 1, day);
+        let age = today.getFullYear() - birthDate.getFullYear();
+        const m = today.getMonth() - birthDate.getMonth();
+        if (m < 0 || (m === 0 && today.getDate() < birthDate.getDate())) {
+            age--;
+        }
+        return age >= 21;
+    }
+
+    function validateForm() {
+        if (checkAllFields()) {
+            continueBtn.classList.add('active');
+            continueBtn.disabled = false;
+        } else {
+            continueBtn.classList.remove('active');
+            continueBtn.disabled = true;
+        }
+    }
+
+    function handleContinue() {
+        if (!checkAge()) {
+            underageModal.style.display = 'flex';
+        } else {
+            // Redirect to the next page, passing gender
+            window.location.href = 'maritalstatus.html?gender=' + gender;
+        }
+    }
+
+    function closeModal() {
+        underageModal.style.display = 'none';
+    }
+
+    firstNameInput.addEventListener('input', validateForm);
+    lastNameInput.addEventListener('input', validateForm);
+    dayInput.addEventListener('input', validateForm);
+    monthInput.addEventListener('input', validateForm);
+    yearInput.addEventListener('input', validateForm);
+    continueBtn.addEventListener('click', handleContinue);
+
+  </script>
+
+</body>
+</html>

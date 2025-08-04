@@ -1,0 +1,140 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Pelli.com - Telugu Matchmaking</title>
+  <style>
+    * {
+      box-sizing: border-box;
+    }
+    body {
+      margin: 0;
+      font-family: 'Segoe UI', sans-serif;
+      background: url('https://images.unsplash.com/photo-1527181152855-fc03fc7949c8') no-repeat center center/cover;
+      height: 100vh;
+      color: #fff;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      text-align: center;
+    }
+    header {
+      position: absolute;
+      top: 20px;
+      left: 30px;
+      font-size: 32px;
+      font-weight: bold;
+      color: #fff;
+      text-shadow: 2px 2px 4px #000;
+    }
+    header span {
+      color: #ff4081;
+      font-family: 'Comic Sans MS', cursive;
+    }
+    nav {
+      position: absolute;
+      top: 20px;
+      right: 40px;
+      font-size: 16px;
+    }
+    nav a {
+      margin-left: 20px;
+      color: #fff;
+      text-decoration: none;
+      font-weight: 600;
+    }
+    .content {
+      background: rgba(0, 0, 0, 0.5);
+      padding: 40px;
+      border-radius: 20px;
+      max-width: 600px;
+    }
+    h1 {
+      font-size: 32px;
+      margin-bottom: 10px;
+    }
+    p {
+      font-size: 20px;
+      margin-bottom: 30px;
+    }
+    .radio-group {
+      display: flex;
+      justify-content: center;
+      margin-bottom: 30px;
+      gap: 30px;
+    }
+    .radio-group label {
+      background-color: #fff;
+      color: #333;
+      padding: 10px 20px;
+      border-radius: 20px;
+      cursor: pointer;
+      font-weight: bold;
+      transition: 0.3s;
+    }
+    .radio-group input[type="radio"] {
+      display: none;
+    }
+    .radio-group input[type="radio"]:checked + label {
+      background-color: #ff4081;
+      color: #fff;
+      transform: scale(1.1);
+    }
+    button {
+      padding: 12px 30px;
+      background-color: #00e5ff;
+      color: #000;
+      font-size: 18px;
+      border: none;
+      border-radius: 30px;
+      cursor: pointer;
+      font-weight: bold;
+      transition: 0.3s;
+    }
+    button:hover {
+      background-color: #00bcd4;
+    }
+    @media (max-width: 600px) {
+      h1 {
+        font-size: 24px;
+      }
+      p {
+        font-size: 16px;
+      }
+      .radio-group {
+        flex-direction: column;
+        gap: 10px;
+      }
+    }
+  </style>
+</head>
+<body>
+
+  <header>
+    <span>Pelli</span>.com
+  </header>
+
+  <nav>
+    <a href="#">Login</a>
+    <a href="#">Help</a>
+  </nav>
+
+  <div class="content">
+    <h1>The Fastest Growing Telugu Matchmaking Service</h1>
+    <p>Best Telugu Matches. Join Free!</p>
+
+    <div class="radio-group">
+      <input type="radio" id="myself" name="partnerFor" value="myself" checked>
+      <label for="myself">Myself</label>
+
+      <input type="radio" id="family" name="partnerFor" value="family">
+      <label for="family">Family or Friend</label>
+    </div>
+
+    <button onclick="window.location.href='step1.html'">Let's Begin</button>
+  </div>
+
+</body>
+</html>

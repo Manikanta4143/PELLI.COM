@@ -1,0 +1,203 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Pelli.com – Marital Info</title>
+  <style>
+    body {
+      margin: 0;
+      padding: 0;
+      font-family: 'Segoe UI', sans-serif;
+      background: linear-gradient(to right, #45c3c4, #6cc384);
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      height: 100vh;
+    }
+
+    .form-card {
+      background: #fff;
+      border-radius: 8px;
+      width: 90%;
+      max-width: 500px;
+      padding: 40px 30px;
+      text-align: center;
+      box-shadow: 0 5px 25px rgba(0, 0, 0, 0.1);
+      position: relative;
+    }
+
+    .progress-bar {
+      height: 4px;
+      background-color: #2ecc71;
+      width: 60%;
+      margin: 0 auto 25px;
+      border-radius: 2px;
+    }
+
+    .icon-circle {
+      width: 70px;
+      height: 70px;
+      background: radial-gradient(circle, #f4e8ff, #fff);
+      border-radius: 50%;
+      margin: 0 auto 10px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 30px;
+      color: #a56de2;
+    }
+
+    label {
+      display: block;
+      text-align: left;
+      margin: 20px 0 8px;
+      font-weight: bold;
+      font-size: 16px;
+      color: #333;
+    }
+
+    select {
+      width: 100%;
+      padding: 12px;
+      border: 1px solid #ccc;
+      border-radius: 6px;
+      font-size: 16px;
+    }
+
+    .diet-section {
+      margin-top: 25px;
+    }
+
+    .diet-options {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 10px;
+      justify-content: flex-start;
+      margin-top: 10px;
+    }
+
+    .diet-options input[type="checkbox"] {
+      display: none;
+    }
+
+    .diet-options label {
+      display: flex;
+      align-items: center;
+      padding: 10px 18px;
+      background: #f2f2f2;
+      border-radius: 25px;
+      border: 1.5px solid transparent;
+      cursor: pointer;
+      font-size: 15px;
+      transition: all 0.2s ease-in-out;
+    }
+
+    .diet-options input[type="checkbox"]:checked + label {
+      background-color: #e0f7e9;
+      border: 1.5px solid #2ecc71;
+      color: #2ecc71;
+    }
+
+    .continue-btn {
+      margin-top: 30px;
+      width: 100%;
+      padding: 14px 0;
+      background-color: #00c4cc;
+      color: #fff;
+      font-size: 16px;
+      font-weight: bold;
+      border: none;
+      border-radius: 30px;
+      box-shadow: 0 3px 10px rgba(0, 0, 0, 0.15);
+      cursor: pointer;
+    }
+
+    .continue-btn:disabled {
+      background-color: #ddd;
+      color: #aaa;
+      cursor: not-allowed;
+    }
+  </style>
+</head>
+<body>
+
+  <div class="form-card">
+    <div class="progress-bar"></div>
+    <div class="icon-circle">👥</div>
+
+    <label for="marital">Marital status</label>
+    <select id="marital">
+      <option value="">Your Marital status *</option>
+      <option>Never Married</option>
+      <option>Divorced</option>
+      <option>Widowed</option>
+      <option>Awaiting Divorce</option>
+    </select>
+
+    <label for="height">Height</label>
+    <select id="height">
+      <option value="">Your Height *</option>
+      <option>4'5"</option>
+      <option>5'0"</option>
+      <option>5'5"</option>
+      <option>6'0"</option>
+      <option>6'5"</option>
+    </select>
+
+    <div class="diet-section">
+      <label>Diet (select all that apply)</label>
+      <div class="diet-options">
+        <input type="checkbox" name="diet" id="veg" value="Veg">
+        <label for="veg">Veg</label>
+
+        <input type="checkbox" name="diet" id="nonveg" value="Non-Veg">
+        <label for="nonveg">Non-Veg</label>
+
+        <input type="checkbox" name="diet" id="occasional" value="Occasionally Non-Veg">
+        <label for="occasional">Occasionally Non-Veg</label>
+
+        <input type="checkbox" name="diet" id="eggetarian" value="Eggetarian">
+        <label for="eggetarian">Eggetarian</label>
+
+        <input type="checkbox" name="diet" id="jain" value="Jain">
+        <label for="jain">Jain</label>
+
+        <input type="checkbox" name="diet" id="vegan" value="Vegan">
+        <label for="vegan">Vegan</label>
+      </div>
+    </div>
+
+    <button class="continue-btn" id="continueBtn" disabled>Continue</button>
+  </div>
+
+  <script>
+    const marital = document.getElementById('marital');
+    const height = document.getElementById('height');
+    const dietCheckboxes = document.querySelectorAll('input[name="diet"]');
+    const btn = document.getElementById('continueBtn');
+
+    function validateAndRedirect() {
+      const maritalSelected = marital.value !== '';
+      const heightSelected = height.value !== '';
+      const dietSelected = [...dietCheckboxes].some(r => r.checked);
+      if (maritalSelected && heightSelected && dietSelected) {
+        window.location.href = 'highestqualification.html';
+      }
+    }
+
+    function validateForm() {
+      const maritalSelected = marital.value !== '';
+      const heightSelected = height.value !== '';
+      const dietSelected = [...dietCheckboxes].some(r => r.checked);
+      btn.disabled = !(maritalSelected && heightSelected && dietSelected);
+    }
+
+    marital.addEventListener('change', validateForm);
+    height.addEventListener('change', validateForm);
+    dietCheckboxes.forEach(r => r.addEventListener('change', validateForm));
+    btn.addEventListener('click', validateAndRedirect);
+  </script>
+
+</body>
+</html>

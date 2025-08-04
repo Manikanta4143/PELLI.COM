@@ -1,0 +1,169 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Pelli.com – Contact Info</title>
+  <style>
+    body {
+      font-family: 'Segoe UI', sans-serif;
+      background: #f9f9f9;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      height: 100vh;
+      margin: 0;
+    }
+
+    .form-container {
+      background: #fff;
+      padding: 40px 30px;
+      border-radius: 15px;
+      width: 90%;
+      max-width: 450px;
+      text-align: center;
+      box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
+    }
+
+    .icon {
+      width: 70px;
+      height: 70px;
+      background: radial-gradient(circle, #fff2d9, #fff8ec);
+      border-radius: 50%;
+      margin: 0 auto 20px;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      font-size: 28px;
+      color: #f9a825;
+    }
+
+    .info-text {
+      color: #444;
+      font-size: 15px;
+      margin-bottom: 30px;
+    }
+
+    h3 {
+      text-align: left;
+      font-size: 16px;
+      margin: 20px 0 6px;
+      color: #333;
+    }
+
+    input[type="text"],
+    input[type="email"],
+    select {
+      width: 100%;
+      padding: 12px;
+      border: 1.5px solid #ccc;
+      border-radius: 8px;
+      font-size: 16px;
+      margin-bottom: 20px;
+    }
+
+    .phone-group {
+      display: flex;
+      gap: 10px;
+    }
+
+    .phone-group select {
+      flex: 0 0 80px;
+    }
+
+    .phone-group input {
+      flex: 1;
+    }
+
+    .submit-btn {
+      width: 100%;
+      margin-top: 20px;
+      padding: 14px;
+      font-size: 16px;
+      border: none;
+      border-radius: 30px;
+      background: #e0e0e0;
+      color: #888;
+      font-weight: bold;
+      cursor: not-allowed;
+    }
+
+    .submit-btn.active {
+      background-color: #f9a825;
+      color: #fff;
+      cursor: pointer;
+    }
+
+    .terms {
+      margin-top: 20px;
+      font-size: 12px;
+      color: #777;
+    }
+
+    .terms a {
+      color: #03a9f4;
+      text-decoration: none;
+    }
+  </style>
+</head>
+<body>
+
+  <div class="form-container">
+    <div class="icon">🛡️</div>
+    <p class="info-text">
+      An active email ID & phone no.<br>
+      are required to secure your Profile
+    </p>
+
+    <h3>Email ID</h3>
+    <input type="email" id="email" placeholder="Email ID">
+
+    <h3>Mobile no.</h3>
+    <div class="phone-group">
+      <select id="countryCode">
+        <option value="+91">+91</option>
+        <option value="+1">+1</option>
+        <option value="+44">+44</option>
+        <option value="+61">+61</option>
+        </select>
+      <input type="text" id="phone" placeholder="Mobile no.">
+    </div>
+
+    <button class="submit-btn" id="submitBtn" disabled>Submit</button>
+
+    <div class="terms">
+      By creating account, you agree to our
+      <a href="#">Privacy Policy</a> and <a href="#">T&C</a>.
+    </div>
+  </div>
+
+  <script>
+    const email = document.getElementById('email');
+    const phone = document.getElementById('phone');
+    const submitBtn = document.getElementById('submitBtn');
+
+    function validate() {
+      const isFilled = email.value.trim() !== '' && phone.value.trim() !== '';
+      if (isFilled) {
+        submitBtn.classList.add('active');
+        submitBtn.disabled = false;
+      } else {
+        submitBtn.classList.remove('active');
+        submitBtn.disabled = true;
+      }
+    }
+
+    function redirect() {
+      const isFilled = email.value.trim() !== '' && phone.value.trim() !== '';
+      if (isFilled) {
+        window.location.href = 'highestqualification.html';
+      }
+    }
+
+    email.addEventListener('input', validate);
+    phone.addEventListener('input', validate);
+    submitBtn.addEventListener('click', redirect);
+  </script>
+
+</body>
+</html>
