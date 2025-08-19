@@ -1,0 +1,180 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Profile For - Pelli.com</title>
+  <style>
+    body {
+      font-family: 'Segoe UI', sans-serif;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      height: 100vh;
+      background: #f8f8f8;
+      margin: 0;
+    }
+
+    .container {
+      text-align: center;
+      background: #fff;
+      padding: 40px 30px;
+      border-radius: 10px;
+      box-shadow: 0 5px 25px rgba(0,0,0,0.1);
+      max-width: 600px;
+      width: 90%;
+    }
+
+    .icon {
+      width: 70px;
+      height: 70px;
+      margin: 0 auto 20px;
+      background: radial-gradient(circle, #ffd8b0, #fff0e5);
+      border-radius: 50%;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      color: #ff8c42;
+      font-size: 30px;
+    }
+
+    h2 {
+      font-weight: normal;
+      color: #333;
+      margin-bottom: 25px;
+    }
+
+    .options {
+      display: grid;
+      grid-template-columns: repeat(4, auto);
+      justify-content: center;
+      gap: 15px;
+    }
+
+    .options.row-2 {
+      grid-template-columns: repeat(3, auto);
+      margin-top: 10px;
+    }
+
+    .option {
+      display: inline-block;
+    }
+
+    input[type="radio"] {
+      display: none;
+    }
+
+    label {
+      border: 2px solid #ddd;
+      padding: 10px 20px;
+      border-radius: 30px;
+      font-size: 16px;
+      color: #444;
+      cursor: pointer;
+      transition: 0.3s;
+      background-color: #fff;
+      white-space: nowrap;
+    }
+
+    input[type="radio"]:checked + label {
+      background-color: #ff8c42;
+      color: #fff;
+      border-color: #ff8c42;
+      font-weight: bold;
+    }
+
+    .continue-btn {
+      margin-top: 30px;
+      padding: 14px 40px;
+      background-color: #00c4cc;
+      color: #fff;
+      font-size: 16px;
+      font-weight: bold;
+      border: none;
+      border-radius: 30px;
+      box-shadow: 0 3px 10px rgba(0, 0, 0, 0.15);
+      cursor: pointer;
+      transition: background 0.3s;
+    }
+
+    .continue-btn:disabled {
+      background: #ccc;
+      cursor: not-allowed;
+    }
+
+    @media (max-width: 500px) {
+      .options,
+      .options.row-2 {
+        grid-template-columns: repeat(2, auto);
+      }
+    }
+  </style>
+</head>
+<body>
+
+  <div class="container">
+    <div class="icon">👤</div>
+    <h2>This Profile is for</h2>
+    
+    <div class="options">
+      <div class="option">
+        <input type="radio" id="myself" name="profileFor" value="Myself">
+        <label for="myself">Myself</label>
+      </div>
+      <div class="option">
+        <input type="radio" id="son" name="profileFor" value="My Son">
+        <label for="son">My Son</label>
+      </div>
+      <div class="option">
+        <input type="radio" id="daughter" name="profileFor" value="My Daughter">
+        <label for="daughter">My Daughter</label>
+      </div>
+      <div class="option">
+        <input type="radio" id="brother" name="profileFor" value="My Brother">
+        <label for="brother">My Brother</label>
+      </div>
+    </div>
+
+    <div class="options row-2">
+      <div class="option">
+        <input type="radio" id="sister" name="profileFor" value="My Sister">
+        <label for="sister">My Sister</label>
+      </div>
+      <div class="option">
+        <input type="radio" id="friend" name="profileFor" value="My Friend">
+        <label for="friend">My Friend</label>
+      </div>
+      <div class="option">
+        <input type="radio" id="relative" name="profileFor" value="My Relative">
+        <label for="relative">My Relative</label>
+      </div>
+    </div>
+    
+    <button class="continue-btn" id="continueBtn" disabled>Continue</button>
+  </div>
+
+  <script>
+    const radios = document.querySelectorAll('input[name="profileFor"]');
+    const continueBtn = document.getElementById('continueBtn');
+
+    radios.forEach(radio => {
+      radio.addEventListener('change', () => {
+        continueBtn.disabled = false; // Enable button when a choice is selected
+      });
+    });
+
+    continueBtn.addEventListener('click', () => {
+      const selected = document.querySelector('input[name="profileFor"]:checked');
+      if (selected) {
+        // Save the selected option to localStorage (optional)
+        localStorage.setItem("profileFor", selected.value);
+        // Redirect to next page
+        window.location.href = 'hisdetails.html';
+      } else {
+        alert("Please select an option before continuing.");
+      }
+    });
+  </script>
+
+</body>
+</html>
